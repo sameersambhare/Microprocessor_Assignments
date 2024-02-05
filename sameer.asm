@@ -7,6 +7,7 @@
     nmsg_len equ $-nmsg
     emsg db 10,""
     emsg_len equ $-emsg
+    
     arr64 dq -1,20,21,-8,2
     n equ 5
 ;-------------------------------------------------------------------------------------
@@ -23,13 +24,7 @@
     syscall
     %endmacro
 
-    %macro read 2
-    mov rax,0
-    mov rdi,0
-    mov rsi,%1
-    mov rdx,%2
-    syscall
-    %endmacro
+  
     
     %macro exit 0
     mov rax,60
@@ -42,14 +37,18 @@
 
    _start:
    print amsg,amsg_len
+   
    mov rsi,arr64
    mov rcx,n
+   
    mov rbx,0
    mov rdx,0
    
    next_num:
    mov rax,[rsi]
-   Rol rax,1
+   ;Rol rax,1
+   ;bt rax,63
+   shl rax,1
    jc negative
    
    positive:
