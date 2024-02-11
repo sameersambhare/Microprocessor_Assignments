@@ -1,5 +1,5 @@
 
-## Commands Guide for Ubuntu
+## Command Guide for Ubuntu
 
 Run the nasm command
 
