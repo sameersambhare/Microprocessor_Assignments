@@ -1,7 +1,7 @@
 section .data
    amsg db "Assignment 4",10
    amsg_len equ $-amsg
-   msg0 db "Conversion of BCD number to HEX number"
+   msg0 db "Conversion of BCD number to HEX number",10
    msg0_len equ $-msg0
    msg db "Enter the five digit number: "
    msg_len equ $-msg
