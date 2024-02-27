@@ -1,9 +1,9 @@
 section .data
-msg db "Assignment 02"
+msg db "Assignment 02",10
 msg_len equ $-msg
 msg1 db "Enter the string: "
 msg1_len equ $-msg1
-msg2 db "Length of string is: "
+msg2 db 10,"Length of string is: "
 msg2_len equ $-msg2
 
 section .bss
