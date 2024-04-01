@@ -1,13 +1,13 @@
 section .data
-msg db "HEX to BCD"
+msg db "HEX to BCD",10
 msg_len equ $-msg
 emsg db "Please enter valid hexadecimal value."
 emsg_len equ $-emsg
 amsg db "Enter the hexadecimal value:"
 amsg_len equ $-amsg
 omsg db "BCD value is:"
-omsg equ $-omsg
-
+omsg_len equ $-omsg
+;-----------------------------------------------
 section .bss
 buff resb 5
 temp resw 1
@@ -21,7 +21,7 @@ mov rdx,%2
 syscall
 %endmacro
 
-%macro read 0
+%macro read 2
 mov rax,0
 mov rdi,0
 mov rsi,%1
@@ -35,7 +35,7 @@ mov rdi,0
 syscall
 %endmacro
 
-
+;-----------------------------------------------
 section .text
 global _start
 _start:
@@ -85,7 +85,7 @@ ret
 ;-----------------------------------------------
 disp_10:
 mov rbx,10
-mov rcx,5
+mov rcx,4
 mov rsi,char_ans+4
 
 cnt: 
