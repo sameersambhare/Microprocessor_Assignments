@@ -7,6 +7,8 @@ amsg db "Enter the hexadecimal value:"
 amsg_len equ $-amsg
 omsg db "BCD value is:"
 omsg_len equ $-omsg
+empty db 10,""
+empty_len equ $-empty
 ;-----------------------------------------------
 section .bss
 buff resb 5
@@ -39,13 +41,14 @@ syscall
 section .text
 global _start
 _start:
-print msg,msg_len
-call accept_16
-mov [temp],bx
-print omsg,omsg_len
-mov ax,[temp]
-call disp_10
-exit
+print msg,msg_len             ;Displaying the basic message
+call accept_16                ;Calling the accept_16 procedure
+mov [temp],bx                 ;Moving the bx to temp variable
+print omsg,omsg_len           ;Displaying the output message
+mov ax,[temp]                 ;Moving the temp to ax again
+call disp_10                  ;Calling the disp_10 procedure
+print empty,empty_len         ;Empty line
+exit                          ;Exit
 
 ;-----------------------------------------------
 accept_16:
@@ -58,20 +61,21 @@ xor bx,bx
 next_byte:
 shl bx,4
 mov al,[rsi]
-cmp al,'0'
+cmp al,'0'             ;'0' OR 30h
 jb error
-cmp al,'9'
+cmp al,'9'             ;'0' OR 39h
 jbe sub30
 
 cmp al,'A'
 jb error
 cmp al,'F'
-jbe sub37
+jbe sub37    
 
 cmp al,'a'
 jb error
 cmp al,'f'
 jbe sub57
+ja error
 
 sub57: sub al,20h
 sub37: sub al,07h
@@ -89,7 +93,7 @@ mov rcx,4
 mov rsi,char_ans+4
 
 cnt: 
-mov rdx,0
+xor rdx,rdx
 div rbx
 cmp dl,09h
 jbe add30
@@ -106,4 +110,6 @@ ret
 ;-----------------------------------------------
 error:
 print emsg,emsg_len
+print empty,empty_len   
+jmp accept_16
 exit
